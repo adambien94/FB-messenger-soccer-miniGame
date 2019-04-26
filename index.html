@@ -20,20 +20,24 @@
     />
     <link rel="stylesheet" href="style.css" />
     <title>soccer mini game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
   <body>
-    <div class="container">
+    <div id="container">
       <span id="score">0</span>
     </div>
     <script type="text/javascript">
-      const W = 300;
-      const H = 500;
       let ball;
       let img;
       let counter = 0;
+      let container = document
+        .getElementById("container")
+        .getBoundingClientRect();
       let score = document.getElementById("score");
       let started = false;
+      const W = container.width;
+      const H = window.innerHeight;
 
       function preload() {
         img = loadImage("./img/ball.png");
@@ -60,11 +64,11 @@
 
       function updateScore(myScore) {
         score.innerHTML = "";
-        score.style.transition = ".3s";
-        score.style.fontSize = "50px";
+        score.style.transition = ".2s";
+        score.style.fontSize = "55px";
         score.style.color = "rgba(0,0,0,0.0)";
         setTimeout(() => {
-          score.style.fontSize = "60px";
+          score.style.fontSize = "70px";
           score.style.color = "rgba(0,0,0,0.7)";
           score.innerHTML = myScore;
         }, 200);
@@ -80,7 +84,7 @@
         this.x = W / 2;
         this.y = H - 80;
         this.loc = createVector(this.x, this.y);
-        this.radius = 80;
+        this.radius = 90;
         this.vel = createVector(0, 1);
         this.gravity = createVector(0, 0.6);
         this.rotation = 0;

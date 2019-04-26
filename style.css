@@ -9,17 +9,26 @@ body {
   background: #000;
 }
 
-.container {
-  width: 300px;
+#container {
+  width: 350px;
+  background: red;
   position: relative;
 }
 
 #score {
   position: absolute;
   left: 50%;
+  top: 20px;
   display: block;
   transform: translate(-50%, 0);
   color: rgba(0, 0, 0, 0.7);
   text-align: center;
-  font-size: 60px;
+  font-size: 70px;
+}
+
+
+@media screen and (max-width: 700px) {
+  #container {
+    width: 100vw;
+  }
 }
