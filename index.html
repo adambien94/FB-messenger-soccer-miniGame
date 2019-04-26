@@ -26,6 +26,7 @@
   <body>
     <div id="container">
       <span id="score">0</span>
+      <span id="emot">👌</span>
     </div>
     <script type="text/javascript">
       let ball;
@@ -35,6 +36,8 @@
         .getElementById("container")
         .getBoundingClientRect();
       let score = document.getElementById("score");
+      let emot = document.getElementById("emot");
+      let emots = ["👌", "💪", "👍", "😜", "🤞", "🤣", "😝", "🐱‍👤"];
       let started = false;
       const W = container.width;
       const H = window.innerHeight;
@@ -76,20 +79,41 @@
 
       function gameOver() {
         started = false;
+        emot.innerHTML = "";
         counter = 0;
-        updateScore(counter);
+        score.style.transition = ".2s";
+        score.style.fontSize = "90px";
+        score.style.color = "#30AFFF";
+        setTimeout(() => {
+          ball.resetBall();
+          updateScore(counter);
+        }, 1000);
+      }
+
+      function emotUpdate(x, y) {
+        emot.innerHTML = emots[Math.floor(random(emots.length - 1))];
+        emot.style.transform = "translate(-50%, -100%)";
+        emot.style.fontSize = "0px";
+        emot.style.left = x + "px";
+        emot.style.top = y + "px";
+        setTimeout(() => {
+          emot.style.fontSize = "18px";
+          emot.style.transition = "0.4s";
+          emot.style.transform = "translate(-50%, -290px)";
+        }, 10);
+        emot.style.transition = "0s";
       }
 
       function Ball() {
         this.x = W / 2;
         this.y = H - 80;
         this.loc = createVector(this.x, this.y);
-        this.radius = 90;
+        this.radius = 95;
         this.vel = createVector(0, 1);
-        this.gravity = createVector(0, 0.6);
+        this.gravity = createVector(0, 1);
         this.rotation = 0;
         this.angle = 0;
-        this.bounceVal = 14;
+        this.bounceVal = 20;
 
         this.display = function() {
           push();
@@ -111,8 +135,6 @@
           this.vel.add(this.gravity);
           this.loc.add(this.vel);
           if (this.loc.y - 200 > H) {
-            this.resetBall();
-
             gameOver();
           } else if (
             this.loc.x + this.radius / 2 > W ||
@@ -153,10 +175,11 @@
 
         this.kick = function() {
           let d = dist(mouseX, mouseY, this.loc.x, this.loc.y);
-          if (d < this.radius / 2 + 15) {
+          if (d < this.radius / 2 + 5) {
             this.bounceKick();
             counter++;
             updateScore(counter);
+            emotUpdate(this.loc.x, this.loc.y);
           }
         };
 
