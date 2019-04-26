@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script language="javascript" type="text/javascript" src="library/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="library/p5.dom.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <title>PVectors</title>
+</head>
+
+<body>
+  <div class="container">
+    <span id="score">0</span>
+  </div>
+  <script type="text/javascript">
+    const W = 300;
+    const H = 500;
+    let ball;
+    let img;
+    let counter = 0;
+    let score = document.getElementById("score");
+    let started = false;
+
+    function preload() {
+      img = loadImage("/img/ball2.png");
+    }
+
+    function setup() {
+      createCanvas(W, H);
+      angleMode(DEGREES);
+      ball = new Ball();
+    }
+
+    function draw() {
+      background(255);
+      ball.display();
+      if (started) {
+        ball.move();
+      }
+    }
+
+    function mousePressed() {
+      ball.kick();
+      started = true;
+    }
+
+    function updateScore(myScore) {
+      score.innerHTML = "";
+      score.style.transition = ".3s";
+      score.style.fontSize = "50px";
+      score.style.color = "rgba(0,0,0,0.0)";
+      setTimeout(() => {
+        score.style.fontSize = "60px";
+        score.style.color = "rgba(0,0,0,0.7)";
+        score.innerHTML = myScore;
+      }, 200)
+    }
+
+    function gameOver() {
+      started = false;
+      counter = 0;
+      updateScore(counter);
+    }
+
+    function Ball() {
+      this.x = W / 2;
+      this.y = H - 80;
+      this.loc = createVector(this.x, this.y);
+      this.radius = 80;
+      this.vel = createVector(0, 1);
+      this.gravity = createVector(0, 0.6);
+      this.rotation = 0;
+      this.angle = 0;
+      this.bounceVal = 14;
+
+      this.display = function () {
+        push();
+        translate(this.loc.x, this.loc.y);
+        rotate(this.angle);
+        this.angle += this.rotation;
+        imageMode(CENTER);
+        image(img, 0, 0, (img.height = this.radius), (img.width = this.radius));
+        pop();
+      };
+
+      this.move = function () {
+        this.vel.add(this.gravity);
+        this.loc.add(this.vel);
+        if (this.loc.y - 200 > H) {
+          this.resetBall();
+
+          gameOver();
+        } else if (
+          this.loc.x + this.radius / 2 > W ||
+          this.loc.x - this.radius / 2 < 0
+        ) {
+          this.bounceX();
+        }
+      };
+
+      this.bounceY = function () {
+        this.vel.y = -this.bounceVal;
+      };
+
+      this.bounceX = function () {
+        this.vel.x = -this.vel.x;
+        this.rotation = -(this.rotation / 1.3);
+      };
+
+      this.bounceKick = function () {
+        let dX = dist(mouseX, this.loc.y, this.loc.x, this.loc.y) / 2;
+        let dY = dist(mouseY, this.loc.x, this.loc.y, this.loc.x) / 2;
+        if (this.loc.x <= mouseX) {
+          this.bounceY();
+          this.vel.x -= dX;
+          this.rotation -= dX;
+          if (this.vel.x < -8) {
+            this.vel.x = -8;
+          }
+        } else if (this.loc.x > mouseX) {
+          this.bounceY();
+          this.vel.x += dX;
+          this.rotation += dX;
+          if (this.vel.x > 8) {
+            this.vel.x = 8;
+          }
+        }
+      };
+
+      this.kick = function () {
+        let d = dist(mouseX, mouseY, this.loc.x, this.loc.y);
+        if (d < this.radius / 2 + 15) {
+          this.bounceKick();
+          counter++;
+          updateScore(counter);
+        }
+      };
+
+      this.resetBall = function () {
+        this.loc = createVector(this.x, this.y);
+        this.rotation = 0;
+      }
+    }
+  </script>
+</body>
+
+</html>
