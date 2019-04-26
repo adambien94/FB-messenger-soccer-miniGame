@@ -9,7 +9,7 @@
   <script language="javascript" type="text/javascript" src="library/p5.dom.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <title>PVectors</title>
+  <title>soccer mini game</title>
 </head>
 
 <body>
@@ -19,14 +19,14 @@
   <script type="text/javascript">
     const W = 300;
     const H = 500;
-    var ball;
+    let ball;
     let img;
     let counter = 0;
     let score = document.getElementById("score");
     let started = false;
 
     function preload() {
-      img = loadImage("/img/ball2.png");
+      img = loadImage("/img/ball.png");
     }
 
     function setup() {
