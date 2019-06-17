@@ -5,22 +5,16 @@
     sans-serif;
 }
 
-body {
-  background: #fff;
-}
 
 #container {
   width: 350px;
-  position: relative;
-}
-
-#container:after {
-  content: '';
+  height: 700px;
   position: absolute;
-  width: calc(100vw - 350px);
-  height: 100vh;
-  left: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  margin: 0 auto;
+  border: 4000px solid rgba(0, 0, 0, 0.9);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #score {
@@ -32,7 +26,7 @@ body {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
   font-size: 100px;
-  z-index: -100;
+  z-index: -1;
   font-weight: 300;
 }
 
@@ -40,12 +34,18 @@ body {
   position: absolute;
   font-size: 0px;
   transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 500px) {
   #container {
     width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    border: none;
   }
 
   #container:after {

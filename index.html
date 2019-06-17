@@ -37,17 +37,24 @@
         .getBoundingClientRect();
       let score = document.getElementById("score");
       let emot = document.getElementById("emot");
-      let emots = ["👌", "💪", "👍", "😜", "🤞", "🤣", "😝", "🐱‍👤"];
+      let emots = ["👌", "💪", "👍", "😜", "🤞", "🤣", "😝", "😁"];
       let started = false;
       const W = container.width;
-      const H = window.innerHeight;
+      const H = container.height;
+      let record = 0;
 
       function preload() {
         img = loadImage("./img/ball.png");
       }
 
       function setup() {
-        createCanvas(W, H);
+        var cnv = createCanvas(W, H);
+        cnv.style("display", "flex");
+        // cnv.style("background", "#fff");
+        cnv.style("position", "absolute");
+        cnv.style("left", "50%");
+        cnv.style("top", "50%");
+        cnv.style("transform", "translate(-50%, -50%)");
         angleMode(DEGREES);
         ball = new Ball();
       }
@@ -69,7 +76,7 @@
       function updateScore(myScore) {
         score.innerHTML = "";
         score.style.transition = ".2s";
-        score.style.fontSize = "65px";
+        score.style.fontSize = "55px";
         score.style.color = "rgba(0,0,0,0.0)";
         setTimeout(() => {
           score.style.fontSize = "100px";
@@ -81,7 +88,11 @@
       function gameOver() {
         started = false;
         emot.innerHTML = "";
+        if (counter > record) {
+          record = counter;
+        }
         counter = 0;
+        score.innerHTML = record;
         score.style.transition = ".2s";
         score.style.fontSize = "200px";
         score.style.color = "#30AFFF";
@@ -92,15 +103,15 @@
       }
 
       function emotUpdate(x, y) {
-        emot.innerHTML = emots[Math.floor(random(emots.length - 1))];
+        emot.innerHTML = emots[Math.floor(random(emots.length))];
         emot.style.transform = "translate(-50%, -100%)";
         emot.style.fontSize = "0px";
         emot.style.left = x + "px";
         emot.style.top = y + "px";
         setTimeout(() => {
-          emot.style.fontSize = "22px";
+          emot.style.fontSize = "24px";
           emot.style.transition = "0.4s";
-          emot.style.transform = "translate(-50%, -290px)";
+          emot.style.transform = "translate(-50%, -340px)";
         }, 10);
         emot.style.transition = "0s";
       }
@@ -111,10 +122,10 @@
         this.loc = createVector(this.x, this.y);
         this.radius = 95;
         this.vel = createVector(0, 1);
-        this.gravity = createVector(0, 1);
+        this.gravity = createVector(0, 1.3);
         this.rotation = 0;
         this.angle = 0;
-        this.bounceVal = 20;
+        this.bounceVal = 28;
 
         this.display = function() {
           push();
