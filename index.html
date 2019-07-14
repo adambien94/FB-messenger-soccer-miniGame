@@ -27,23 +27,21 @@
     <div id="container">
       <span id="record">Obecny rekord</span>
       <span id="score">0</span>
+      <span id="emot">👌</span>
     </div>
-    <span id="emot">👌</span>
 
     <script type="text/javascript">
       let ball;
       let img;
       let counter = 0;
       let recordSpan = document.getElementById("record");
-      let container = document
-        .getElementById("container")
-        .getBoundingClientRect();
+      let container = document.getElementById("container");
       let score = document.getElementById("score");
       let emot = document.getElementById("emot");
       let emots = ["👌", "💪", "👍", "😜", "🤞", "🤣", "😝", "😁"];
       let started = false;
-      const W = container.width;
-      const H = container.height;
+      const W = container.getBoundingClientRect().width;
+      const H = container.getBoundingClientRect().height;
       let record = 0;
 
       function preload() {
@@ -52,6 +50,7 @@
 
       function setup() {
         var cnv = createCanvas(W, H);
+        cnv.parent("container");
         cnv.style("z-index", "0");
         cnv.style("position", "absolute");
         cnv.style("left", "50%");
@@ -111,7 +110,7 @@
         }, 1000);
       }
 
-      function emotUpdate(x, y) {
+      function updateEmot(x, y) {
         emot.innerHTML = emots[Math.floor(random(emots.length))];
         emot.style.transform = "translate(-50%, -100%)";
         emot.style.fontSize = "0px";
@@ -200,7 +199,7 @@
             this.bounceKick();
             counter++;
             updateScore(counter);
-            emotUpdate(this.loc.x, this.loc.y);
+            updateEmot(mouseX, this.loc.y);
           }
         };
 
