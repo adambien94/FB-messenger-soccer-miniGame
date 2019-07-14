@@ -27,8 +27,9 @@
     <div id="container">
       <span id="record">Obecny rekord</span>
       <span id="score">0</span>
-      <span id="emot">👌</span>
     </div>
+    <span id="emot">👌</span>
+
     <script type="text/javascript">
       let ball;
       let img;
@@ -61,12 +62,15 @@
       }
 
       function draw() {
-        // background(255);
         clear();
         ball.display();
         if (started) {
           ball.move();
         }
+      }
+
+      function windowResized() {
+        resizeCanvas(W, H);
       }
 
       function mousePressed() {
@@ -94,10 +98,10 @@
         }
         counter = 0;
         score.innerHTML = record;
-        recordSpan.style.fontSize = "24px";
+        recordSpan.style.fontSize = "22px";
         recordSpan.style.opacity = "1";
         score.style.transition = ".2s";
-        score.style.fontSize = "180px";
+        score.style.fontSize = "160px";
         score.style.color = "#30AFFF";
         setTimeout(() => {
           ball.resetBall();
