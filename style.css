@@ -5,18 +5,23 @@
     sans-serif;
 }
 
+body {
+  background: black;
+}
+
 
 #container {
-  width: 350px;
-  height: 700px;
+  width: 380px;
+  height: 100vh;
   position: absolute;
   margin: 0 auto;
-  border: 4000px solid rgba(0, 0, 0, 0.9);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: #f1f1f1;
 }
 
+#record,
 #score {
   position: absolute;
   left: 50%;
@@ -25,16 +30,27 @@
   transform: translate(-50%, 0);
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  font-size: 100px;
-  z-index: -1;
+}
+
+#record {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0;
+  transition: .2s;
+}
+
+#score {
+  font-size: 110px;
   font-weight: 300;
+  z-index: -1;
+
 }
 
 #emot {
   position: absolute;
   font-size: 0px;
   transform: translate(-50%, -50%);
-  z-index: 0;
+  z-index: 1;
 }
 
 
