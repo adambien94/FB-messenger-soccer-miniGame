@@ -6,19 +6,20 @@
 }
 
 body {
-  background: black;
+  background: rgba(0, 0, 0, 0.1);
+  /* background: url('/img/field.jpg'); */
 }
 
 
 #container {
-  width: 380px;
+  width: 400px;
   height: 100vh;
   position: absolute;
   margin: 0 auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: linear-gradient(#f6f6f6, #fff);
 }
 
 #record,
@@ -33,7 +34,7 @@ body {
 
 #record {
   top: 95px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   opacity: 0;
   transition: .2s;
