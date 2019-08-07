@@ -20,6 +20,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: linear-gradient(#f6f6f6, #fff);
+  cursor: cell;
 }
 
 #record,

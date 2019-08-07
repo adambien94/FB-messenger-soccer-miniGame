@@ -195,7 +195,7 @@
 
         this.kick = function() {
           let d = dist(mouseX, mouseY, this.loc.x, this.loc.y);
-          if (d < this.radius / 2 + 5) {
+          if (d < this.radius / 2 + 8) {
             this.bounceKick();
             counter++;
             updateScore(counter);
